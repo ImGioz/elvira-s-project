@@ -1,0 +1,152 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/main.css') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Elvira's restaurant system</title>
+</head>
+<body>
+    <div class="header_container">
+        <p>Select table:</p>
+    </div>
+    <div class="first_container">
+        <div id="restaurant-layout"></div>
+    </div>
+    <div class="footer_container">
+        <button type="button" id="inside" class="nonactive-btn">inside</button>
+        <button type="button" id="outside" class="nonactive-btn">outside</button>
+    </div>
+    <!-- popup delete all records -->
+     <div class="pop-up" id="pop-up">
+        <div class="pop-up-item">
+            <div class="pop-up-text">
+                <p class="popup-table" id="popup-table"></p>
+            </div>
+            <div class="pop-up-btns">
+                <button type="button" id="pop-up-yes" class="active-btn">Yes</button>
+                <button type="button" id="pop-up-back" class="nonactive-btn">Back</button>
+            </div>
+        </div>
+     </div>
+
+      <!-- popup delete product -->
+      <div class="pop-up" id="pop-up-prod">
+        <div class="pop-up-item">
+            <div class="pop-up-text">
+                <p class="popup-table" id="popup-prod-table"></p>
+            </div>
+            <div class="pop-up-btns">
+                <button type="button" id="pop-up-prod-yes" class="active-btn">Yes</button>
+                <button type="button" id="pop-up-prod-back" class="nonactive-btn">Back</button>
+            </div>
+        </div>
+     </div>
+
+      <!-- ordrs select popup -->
+<div id="modal" class="modal">
+    <div style="height: max-content; gap: 20px;" class="header_container">
+        <p id="table-number">Table:</p>
+        <p id="opened-order-number" style="font-size: 20px; line-height: 1.2; display: none;">Opened: <br> <span id="opened-time">10:00:00</span></p>
+        <span id="close" class="close">select table</span>
+    </div>
+    <div class="main_container">
+        <div id="order-items">
+            <div class="order-item">
+                    <!-- list of products will be loaded here -->
+            </div>
+        </div>
+    </div>    
+    <div style="z-index: 1;" class="footer_container">
+        <button id="add-item" class="active-btn">Add</button>
+        <button type="button" id="clear-btn" class="nonactive-btn">Clear</button>
+    </div>
+
+    <!-- select category popup -->
+<div id="modal-new-item" class="modal">
+    <div style="height: max-content;" class="header_container">
+        <p id="table-number-new" style="width: 200px;">Choose category</p>
+        <span id="close-new" class="order-close-btn" data-table-number="1">Back to <br> Order List</span>
+    </div>
+    <div class="main_container">
+        <div id="order-items-new">
+            <div class="order-item">
+                   <!-- list of products will be loaded here lol -->
+            </div>
+        </div>
+    </div>    
+    <div style="justify-content: left;" class="footer_container">
+        <button id="add-another-item" class="active-btn">Back</button>
+        <button id="cancel-order" class="nonactive-btn">Cancel</button>
+    </div>
+</div>
+
+<!-- poduct choose popup -->
+<div id="modal-meal-item" class="modal">
+    <div style="height: max-content;" class="header_container">
+        <p id="table-number-meal" style="width: 200px;">Choose meal</p>
+        <span id="close-new" class="order-close-btn" data-table-number="2">Back to <br> Order List</span>
+    </div>
+    <div class="main_container">
+        <div id="meal-items-container"></div>
+        <!-- list of products will be loaded here -->
+    </div>
+    <div class="footer_container">
+        <button id="back-btn" class="active-btn">Back</button>
+    </div>
+</div>
+
+<!-- prodcuct option seletct popup -->
+<div id="modal-option-item" class="modal">
+    <div class="header_container">
+        <p id="table-number-option" style="width: 200px;">Choose option</p>
+        <span id="close-new" class="order-close-btn" data-table-number="3">Back to <br> Order List</span>
+    </div>
+    <div class="main_container">
+        <div id="option-items-container"></div>
+        <!-- list of products will be loaded here -->
+    </div>
+    <div class="footer_container">
+        <button id="confirm-option" class="confirm-button">Confirm</button>
+    </div>
+</div>
+
+<div id="order-modal" class="modal" style="display: none;">
+    <div class="header_container">
+        <p id="header-table-number" style="width: 200px;">Adding order:</p>
+        <button id="discard-order" class="close">Discard order</button>
+    </div>
+    <div class="main_container" id="option-main-container">
+        <div id="order-item">
+            <!-- orders for the selected table will be populated here -->
+        </div>
+    </div>    
+    <div class="footer_container">
+        <button id="add-more" class="active-btn">Add more</button>
+        <button type="button" id="print-button" class="nonactive-btn">Print</button>
+    </div>
+</div>
+
+
+    <!-- popup of print -->
+<div id="print-modal" class="modal">
+    <div style="height: max-content;" class="header_container">
+        <p id="print-table-number" style="width: 200px;">Print order for the table:</p>
+    </div>
+    <div class="main_container" id="print-main-container">
+        <div class="order-item">
+       <!-- list of products will be loaded here -->
+    </div>
+    </div>
+    <div class="footer_container">
+        <button type="button" class="active-btn" id="confirm-print">Yes</button>
+        <span id="close-btn" class="nonactive-btn">Back</span>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+</body>
+</html>
